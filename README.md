@@ -50,6 +50,9 @@ CREATE TABLE reclamacoes (
     data_postagem TIMESTAMP,
     nota_final INT
 );
+
+```
+
 3. 🔄 Pipeline de Dados (ETL / ELT)
 Processamento: Python + Pandas para limpeza de strings e remoção de caracteres especiais.
 Modelagem dbt:
