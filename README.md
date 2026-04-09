@@ -1,49 +1,52 @@
-# 🚀 Sistema de Monitoramento de Reclamações + Impacto no Negócio
+# 🚀 ReclameX: Monitoramento e Impacto de Marcas (Reclame Aqui)
 
 ## 📌 Visão Geral
-Este projeto foi desenvolvido para analisar reclamações (de clientes ou funcionários) e prever o impacto direto no desempenho do negócio, como vendas e produtividade. É um projeto ponta-a-ponta que conecta três pilares essenciais:
+Este projeto é focado na extração e análise de dados do **Reclame Aqui**. O objetivo é monitorar a reputação de empresas, entender as principais dores dos clientes e prever como a insatisfação impacta o negócio (como churn de clientes ou queda em vendas).
 
-*   **Engenharia de Dados:** Coleta e estruturação.
-*   **Análise de Dados:** Geração de insights e métricas.
-*   **Machine Learning:** Modelagem preditiva.
+Integração de três pilares:
+1.  **Engenharia de Dados:** Extração e estruturação de dados não estruturados.
+2.  **Análise de Dados:** Identificação de tendências e gargalos de atendimento.
+3.  **Machine Learning:** Classificação de sentimentos e predição de notas.
 
 ---
 
 ## 🧠 Objetivo
-Construir um pipeline automatizado capaz de:
-1. Coletar dados de fontes externas.
-2. Tratar, limpar e organizar informações em um banco relacional.
-3. Analisar padrões e tendências de mercado/setor.
-4. Gerar insights acionáveis via dashboards.
-5. Realizar previsões inteligentes utilizando Machine Learning.
+Construir um pipeline end-to-end que:
+- Realiza o scraping de reclamações de empresas específicas.
+- Organiza os dados para evitar duplicidade em cargas incrementais.
+- Identifica os problemas mais recorrentes por setor.
+- Prevê se uma reclamação tem alto potencial de virar uma "crise de imagem".
 
 ---
 
 ## 🧱 Arquitetura e Etapas
 
-### 1. 📥 Coleta de Dados (Data Acquisition)
-Fontes de dados sugeridas para o projeto:
-*   **Web Scraping:** Reclame Aqui (usando `BeautifulSoup`).
-*   **Datasets:** Kaggle ou repositórios públicos.
-*   **Governamentais:** API do [dados.gov.br](https://dados.gov.br).
+### 1. 📥 Coleta de Dados (Web Scraping)
+Foco exclusivo na plataforma **Reclame Aqui**.
+*   **Ferramentas:** Python com `BeautifulSoup`, `Selenium` ou `Scrapy`.
+*   **Dados capturados:** 
+    *   Título e texto da reclamação.
+    *   Status (Respondida, Não respondida, Resolvida).
+    *   Nota do consumidor e índice de "Voltaria a fazer negócio".
+    *   Timestamp (Data e hora).
 
-**Principais Atributos:** Data da reclamação, Empresa/Setor, Categoria do problema e Avaliação/Nota.
-
-### 2. 🗄️ Armazenamento (Data Engineering)
-Utilização do **PostgreSQL** para persistência, com foco em modelagem relacional e normalização.
+### 2. 🗄️ Armazenamento (Engenharia de Dados)
+Modelagem relacional robusta no **PostgreSQL** para suportar análises históricas.
 
 ```sql
--- Exemplo de estrutura de tabelas
+-- Estrutura sugerida para o projeto
 CREATE TABLE empresas (
     id SERIAL PRIMARY KEY,
-    nome VARCHAR(255),
+    nome_slug VARCHAR(255) UNIQUE, -- ex: 'magazine-luiza'
     setor VARCHAR(100)
 );
 
 CREATE TABLE reclamacoes (
-    id SERIAL PRIMARY KEY,
+    id_externo VARCHAR(50) PRIMARY KEY, -- ID único do Reclame Aqui
     empresa_id INT REFERENCES empresas(id),
-    texto_reclamacao TEXT,
-    data_criacao TIMESTAMP,
-    status VARCHAR(50)
+    titulo VARCHAR(255),
+    descricao TEXT,
+    status VARCHAR(50),
+    data_postagem TIMESTAMP,
+    nota_final INT
 );
