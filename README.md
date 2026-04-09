@@ -50,3 +50,53 @@ CREATE TABLE reclamacoes (
     data_postagem TIMESTAMP,
     nota_final INT
 );
+3. 🔄 Pipeline de Dados (ETL / ELT)
+Processamento: Python + Pandas para limpeza de strings e remoção de caracteres especiais.
+Modelagem dbt:
+src_reclamacoes: Dados crus do scraping.
+stg_reclamacoes: Padronização de datas e categorias.
+fct_insatisfacao: Tabela fato para alimentar o dashboard.
+4. 📊 Dashboard de Insights
+Visualização clara da saúde da marca utilizando Metabase ou Streamlit.
+
+Métricas chave:
+Tempo médio de resposta.
+Volume de reclamações vs. Evolução da nota.
+Nuvem de palavras dos termos mais citados (ex: "atraso", "estorno", "defeito").
+5. 🤖 Machine Learning (NLP)
+Análise de Sentimento: Classificar automaticamente se a reclamação é leve, moderada ou crítica.
+Predição: Modelos para prever a probabilidade do cliente "voltar a fazer negócio" com base no texto inicial.
+Ferramentas: scikit-learn, NLTK ou Spacy.
+⚙️ Automação
+Orquestração: Agendamento para rodar o scraper diariamente e atualizar os dados no banco usando cron ou Airflow.
+Alertas: Envio de notificações via Telegram/Slack quando uma empresa monitorada recebe um pico de reclamações em curto espaço de tempo
+
+### 3. 🔄 Pipeline de Dados (ETL / ELT)
+*   **Processamento:** Python + Pandas para limpeza de strings e remoção de caracteres especiais.
+*   **Modelagem dbt:**
+    *   `src_reclamacoes`: Dados crus do scraping.
+    *   `stg_reclamacoes`: Padronização de datas e categorias.
+    *   `fct_insatisfacao`: Tabela fato para alimentar o dashboard.
+
+---
+
+### 4. 📊 Dashboard de Insights
+Visualização clara da saúde da marca utilizando **Metabase** ou **Streamlit**.
+
+*   **Métricas chave:**
+    *   Tempo médio de resposta.
+    *   Volume de reclamações vs. Evolução da nota.
+    *   Nuvem de palavras dos termos mais citados (ex: `"atraso"`, `"estorno"`, `"defeito"`).
+
+---
+
+### 5. 🤖 Machine Learning (NLP)
+*   **Análise de Sentimento:** Classificar automaticamente se a reclamação é leve, moderada ou crítica.
+*   **Predição:** Modelos para prever a probabilidade do cliente "voltar a fazer negócio" com base no texto inicial.
+*   **Ferramentas:** `scikit-learn`, `NLTK` ou `Spacy`.
+
+---
+
+## ⚙️ Automação
+*   **Orquestração:** Agendamento para rodar o scraper diariamente e atualizar os dados no banco usando `cron` ou `Airflow`.
+*   **Alertas:** Envio de notificações via Telegram/Slack quando uma empresa monitorada recebe um pico de reclamações em curto espaço de tempo.
